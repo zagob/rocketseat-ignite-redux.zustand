@@ -5,6 +5,7 @@ import { Header } from "../components/Header";
 import { Module } from "../components/Module";
 import { Video } from "../components/Video";
 import { useCurrentLesson, useStore } from "../zustand-store";
+import { LoadingPulseModule } from "../components/LoadingPulseModule";
 
 export function Player() {
   const { course, load } = useStore((store) => {
@@ -44,7 +45,7 @@ export function Player() {
           </div>
 
           <aside className="w-80 absolute top-0 bottom-0 right-0 border-l divide-y-2 divide-zinc-900 border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar scrollbar-thin scrollbar-track-zinc-950 scrollbar-track-zinc-800">
-            {course?.modules &&
+            {course?.modules ? (
               course?.modules.map((module, index) => (
                 <Module
                   key={module.id}
@@ -52,7 +53,10 @@ export function Player() {
                   title={module.title}
                   amountOfLessons={module.lessons.length}
                 />
-              ))}
+              ))
+            ) : (
+              <LoadingPulseModule />
+            )}
           </aside>
         </main>
       </div>
